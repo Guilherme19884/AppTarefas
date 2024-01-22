@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/tb_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:title="Criar tarefa"
+        app:navigationIcon="@drawable/ic_arrow_back" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_guideleft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="32dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_guiderigth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="32dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_entradaTextTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Inserir Título"
+        app:layout_constraintTop_toBottomOf="@+id/tb_toolbar"
+        app:layout_constraintStart_toStartOf="@+id/gl_guideleft"
+        app:layout_constraintEnd_toEndOf="@id/gl_guiderigth"
+        android:layout_marginTop="16dp"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:inputType="text"
+            android:maxLength="50"
+            android:ems="50"
+            android:maxLines="1"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_data"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:hint="      Data"
+        app:layout_constraintTop_toBottomOf="@id/til_entradaTextTitle"
+        app:layout_constraintStart_toStartOf="@+id/gl_guideleft"
+        app:layout_constraintEnd_toStartOf="@id/til_hora"
+        app:startIconDrawable="@drawable/ic_calendar">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tie_inputDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_hora"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="      hora"
+        app:layout_constraintEnd_toEndOf="@id/gl_guiderigth"
+        app:layout_constraintStart_toEndOf="@id/til_data"
+        app:layout_constraintTop_toTopOf="@id/til_data"
+        app:startIconDrawable="@drawable/ic_hour">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Será criado futuramente caixa de descrição -->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_descripition"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:hint="Descrição"
+        app:counterEnabled="true"
+        app:counterMaxLength="200"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        app:layout_constraintStart_toStartOf="@id/gl_guideleft"
+        app:layout_constraintTop_toBottomOf="@id/til_data"
+        app:layout_constraintEnd_toEndOf="@id/gl_guiderigth"
+        app:layout_constraintBottom_toTopOf="@+id/bt_Excluir">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_mutline"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine"
+            android:gravity="top" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                    <!-- Botões -->
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bt_Salvar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Criar tarefa"
+        style="@style/Widget.Material3.Button"
+        app:layout_constraintStart_toStartOf="@id/gl_guideleft"
+        app:layout_constraintEnd_toEndOf="@id/gl_guiderigth"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bt_Excluir"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:focusable="true"
+        android:clickable="true"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        app:layout_constraintStart_toStartOf="@id/gl_guideleft"
+        app:layout_constraintEnd_toEndOf="@id/gl_guiderigth"
+        app:layout_constraintBottom_toTopOf="@id/bt_Salvar"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
