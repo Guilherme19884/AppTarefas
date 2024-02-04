@@ -41,8 +41,10 @@ class AddTaskActivity : AppCompatActivity() {
             val timePicker = MaterialTimePicker.Builder()
                 .setTimeFormat(TimeFormat.CLOCK_24H)
                 .build()
-            timePicker.addOnPositiveButtonClickListener {
-                binding.tilHora.text = "${timePicker.hour} ${timePicker.minute}"
+            timePicker.addOnPositiveButtonClickListener{
+                val minute =  if(timePicker.minute in 0..9)"0${timePicker.minute}" else timePicker.minute
+                val hour =if(timePicker.hour in 0..9)"0${timePicker.hour}" else timePicker.hour
+                binding.tilHora.text = "$hour : $minute"
             }
             timePicker.show(supportFragmentManager, null)
         }
@@ -56,6 +58,7 @@ class AddTaskActivity : AppCompatActivity() {
             )
             TarefaDataSource.insertTarefa(tarefa) // Corrigido para acessar via instância
             Log.e("TAG", "insertListeners" + TarefaDataSource.getList())
+            finish()
         }
         binding.btCancelar.setOnClickListener {
             finish()
@@ -64,4 +67,4 @@ class AddTaskActivity : AppCompatActivity() {
 
 }
 
-//parei a aula no 7'24" da aula Time Picker
+//15:30
