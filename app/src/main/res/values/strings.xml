@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Tarefas</string>
+    <string name="editar">Editar</string>
+    <string name="deletar">Deletar</string>
 </resources>

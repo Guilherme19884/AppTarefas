@@ -3,12 +3,15 @@ package com.guiga.tarefas.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import com.guiga.tarefas.dataSource.TarefaDataSource
 import com.guiga.tarefas.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     private val adapter by lazy {TaskListAdapter()}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,7 +25,23 @@ class MainActivity : AppCompatActivity() {
 
     fun insertListeners(){
         binding.faButton.setOnClickListener {
-            startActivity(Intent(this, AddTaskActivity::class.java))
+            startActivityForResult(Intent(this, AddTaskActivity::class.java), CREAT_NEW_TASK)
+        }
+        adapter.listenerEdit = {
+            Log.e("TAG", "Listerner Edit")
+        }
+        adapter.listenerDelete = {
+            Log.e("TAG", "Listerner Delete")
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CREAT_NEW_TASK)
+            binding.rvListTasks.adapter = adapter
+            adapter.submitList(TarefaDataSource.getList())
+    }
+
+    companion object
+     val CREAT_NEW_TASK = 1000
 }
