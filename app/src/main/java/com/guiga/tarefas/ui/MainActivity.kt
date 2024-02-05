@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.result.ActivityResult
 import com.guiga.tarefas.dataSource.TarefaDataSource
 import com.guiga.tarefas.databinding.ActivityMainBinding
@@ -44,12 +45,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CREAT_NEW_TASK && resultCode == Activity.RESULT_OK) {
+        if (requestCode == CREAT_NEW_TASK && resultCode == Activity.RESULT_OK)
             updateList()
-        }
     }
 
     private fun updateList(){
+        val list = TarefaDataSource.getList()
+        if (list.isEmpty()){
+            binding.emptyState.tvEmptySate.visibility = View.VISIBLE
+        }else{
+            binding.emptyState.tvEmptySate.visibility = View.GONE
+        }
         adapter.submitList(TarefaDataSource.getList())
     }
 
