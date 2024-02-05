@@ -1,5 +1,7 @@
 package com.guiga.tarefas.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +26,15 @@ class AddTaskActivity : AppCompatActivity() {
         binding = ActivityAddTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (intent.hasExtra(TASK_ID)){
+            val taskId = intent.getIntExtra(TASK_ID, 0)
+            TarefaDataSource.findById(taskId)?.let {
+                binding.tilEntradaTextTitle.text = it.title
+                binding.tilHora.text = it.hour
+                binding.tilData.text = it.date
+                binding.tilDescripition.text = it.description
+            }
+        }
         insertListeners()
     }
 
@@ -54,17 +65,27 @@ class AddTaskActivity : AppCompatActivity() {
                 title = binding.tilEntradaTextTitle.text,
                 date = binding.tilData.text,
                 hour = binding.tilHora.text,
-                description = binding.tilDescripition.text
+                description = binding.tilDescripition.text,
+                id = intent.getIntExtra(TASK_ID, 0)
             )
             TarefaDataSource.insertTarefa(tarefa) // Corrigido para acessar via instância
             Log.e("TAG", "insertListeners" + TarefaDataSource.getList())
+            updateListInMainActivity()
             finish()
         }
         binding.btCancelar.setOnClickListener {
             finish()
         }
     }
-
+    private fun updateListInMainActivity() {
+        val resultIntent = Intent().apply {
+            setResult(Activity.RESULT_OK, this)
+        }
+        setResult(Activity.RESULT_OK, resultIntent)
+    }
+    companion object{
+        const val TASK_ID = "task_id"
+    }
 }
 
-//15:30
+

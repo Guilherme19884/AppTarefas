@@ -1,9 +1,11 @@
 package com.guiga.tarefas.ui
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.ActivityResult
 import com.guiga.tarefas.dataSource.TarefaDataSource
 import com.guiga.tarefas.databinding.ActivityMainBinding
 
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.rvListTasks.adapter = adapter
+        updateList()
 
         insertListeners()
     }
@@ -28,18 +31,26 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(Intent(this, AddTaskActivity::class.java), CREAT_NEW_TASK)
         }
         adapter.listenerEdit = {
-            Log.e("TAG", "Listerner Edit")
+            val intent = Intent(this, AddTaskActivity::class.java)
+            intent.putExtra(AddTaskActivity.TASK_ID, it.id)
+            startActivityForResult(intent, CREAT_NEW_TASK)
+            updateList()
         }
         adapter.listenerDelete = {
-            Log.e("TAG", "Listerner Delete")
+            TarefaDataSource.deleteTarefa(it)
+            updateList()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CREAT_NEW_TASK)
-            binding.rvListTasks.adapter = adapter
-            adapter.submitList(TarefaDataSource.getList())
+        if (requestCode == CREAT_NEW_TASK && resultCode == Activity.RESULT_OK) {
+            updateList()
+        }
+    }
+
+    private fun updateList(){
+        adapter.submitList(TarefaDataSource.getList())
     }
 
     companion object
